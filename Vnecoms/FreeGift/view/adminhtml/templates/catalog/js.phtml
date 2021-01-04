@@ -1,0 +1,27 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<script>
+require(["jquery", "prototype"], function(jQuery){
+    function checkFreeGiftRuleAction(){
+        switch(jQuery("#rule_simple_action").val()){
+            case 'together':
+                jQuery('#rule_no_of_freegift').parent().parent().hide();
+                jQuery('#rule_no_of_freegift').removeClass('required-entry validate-greater-than-zero');
+                break;
+            case 'select':
+            	jQuery('#rule_no_of_freegift').parent().parent().show();
+            	jQuery('#rule_no_of_freegift').addClass('required-entry validate-greater-than-zero');
+                break; 
+        }
+    }
+
+    checkFreeGiftRuleAction();
+    jQuery("#rule_simple_action").change(function(){
+    	checkFreeGiftRuleAction();
+    });
+});
+</script>

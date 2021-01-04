@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+	<!-- set has options for the product if it has free gifts -->
+	<event name="catalog_controller_product_view">
+		<observer name="vnecoms_freegift_catalog_controller_product_view" instance="Vnecoms\FreeGift\Observer\Product" />
+	</event>
+	
+	<!-- Add free gift product to cart -->
+	<event name="checkout_cart_product_add_after">
+		<observer name="vnecoms_freegift_checkout_cart_product_add_after" instance="Vnecoms\FreeGift\Observer\Cart" />
+	</event>
+	
+	<!-- Update the price of free gift product to zero -->
+	<!--
+	<event name="catalog_product_get_final_price">
+		<observer name="vnecoms_freegift_catalog_product_get_final_price" instance="Vnecoms\FreeGift\Observer\UpdateFreeProductPrice" />
+	</event>
+	-->
+	<!-- If customer remove an item from cart, check if it has any free gifts and remove them-->
+	<event name="sales_quote_remove_item">
+		<observer name="vnecoms_freegift_sales_quote_item_delete_after" instance="Vnecoms\FreeGift\Observer\RemoveFreeGift" />
+	</event>
+	
+	<!-- Update free gift quanty after customer update the main product quanty -->
+	<event name="sales_quote_collect_totals_after">
+		<observer name="vnecoms_freegift_checkout_cart_save_before" instance="Vnecoms\FreeGift\Observer\UpdateFreeGift" />
+		<observer name="vnecoms_freegift_quote_collect_totals_before" instance="Vnecoms\FreeGift\Observer\RemoveInvalidFreeGift" />
+	</event>
+
+</config>

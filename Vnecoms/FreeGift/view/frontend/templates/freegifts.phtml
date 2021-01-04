@@ -1,0 +1,138 @@
+<?php
+/**
+ * Category view template
+ *
+ * @var $block \Vnecoms\FreeGift\Block\Product
+ */
+$thumbnailWidth = 135;
+$thumbnailHeight = 135;
+$isSelectMode = $block->isSelectMode();
+?>
+<div class="freegift-products<?php if($isSelectMode):?> freegift-select-mode<?php endif;?>" id="freegift-products">
+    <h3 class="freegift-block-title"><i class="fg-gift"></i> <?php echo __("Free Gifts")?></h3>
+    <?php if($isSelectMode):?>
+        <p class="label-freegift"><?php echo __("Buy this product and get %1 free gifts from the list below.", '<strong>'.$block->getNumberOfFreeGift().'</strong>')?></p>
+    <?php else:?>
+        <p><?php echo __("Buy this product and get all free gifts below.")?></p>
+    <?php endif;?>
+    <?php $counter = 0; ?>
+    <?php foreach($block->getFreeProducts() as $_product): ?>
+        <?php $productStock = $block->getStockItem($_product->getId(), $_product->getStore()->getWebsiteId()); ?>
+        <?php if ($productStock->getIsInStock()) : ?>
+            <?php $counter += 1; ?>
+            <div class="freegift-info" data-product="<?php echo $_product->getId()?>">
+                <div class="freegift-thumbnail">
+                    <img src="<?php echo $block->getProductImageUrl($_product, $thumbnailWidth, $thumbnailHeight)?>" width="<?php echo $thumbnailWidth?>" height="<?php echo $thumbnailHeight?>">
+                </div>
+                <div class="product-item-name freegift-name">
+                    <?php echo $_product->getName();?>
+                </div>
+                <div class="freegift-regular-price"><?php /* @escapeNotVerified */ echo $block->getProductPrice($_product) ?></div>
+                <div class="freegift-selected"><i class="fg-selected"></i></div>
+                <div class="freegift-view"><a href="<?php echo $_product->getProductUrl()?>" target="_blank"><i class="fg-product"></i></a></div>
+            </div>
+        <?php endif; ?>
+    <?php endforeach;?>
+    <?php // if($isSelectMode):?>
+        <!-- <input type="text" style="visibility: hidden;" class="required-entry" id="selected-gift" name="selected_free_gifts" value="" /> -->
+    <?php // endif;?>
+</div>
+
+<?php if($isSelectMode):?>
+    <script type="text/javascript">
+        require([
+            "jquery",
+            "Magento_Ui/js/modal/alert",
+            "Magento_Ui/js/modal/confirm",
+        ], function($, alert, confirm){
+            
+            var FREEGIFT_NUM = <?php echo $block->getNumberOfFreeGift()?>;
+            var counter = <?php echo $counter; ?>;
+
+            if(FREEGIFT_NUM > counter) { 
+                FREEGIFT_NUM = counter;
+                var label_freegift = "<?php echo __('Buy this product and get %1 free gifts from the list below.')?>".replace("%1", '<strong>'+FREEGIFT_NUM+'</strong>');
+                $('.label-freegift').html(label_freegift);
+            }
+
+            $('<input type="hidden" class="required-entry" id="selected-gift" name="selected_free_gifts" value="" />').prependTo("#product_addtocart_form");
+
+            $("#product-addtocart-button").attr('type', 'button');
+            
+            $("#product_addtocart_form").on('click', '#product-addtocart-button', function() {
+                var selectedFreegift = $('#selected-gift').val() ? $($('#selected-gift').val().split(',')).size() : 0;
+                if(selectedFreegift < FREEGIFT_NUM){
+                    confirm({
+                        modalClass: 'confirm vnecoms-warning freegif-warning-modal',
+                        title: "<?php echo __("Warning ...");?>",
+                        content: "<?php echo __('Please select %1 free gift before add to cart. (%2 free gift(s) is selected)')?>".replace("%1",'<strong>'+FREEGIFT_NUM+'</strong>').replace("%2",'<strong>'+selectedFreegift+'</strong>'),
+                        buttons: [{
+                            text: "<?php echo __('Select more free gifts')?>",
+                            class: 'action-secondary action-dismiss',
+
+                            /**
+                             * Click handler.
+                             */
+                            click: function (event) {
+                                this.closeModal(event);
+                            }
+                        }, {
+                            text: "<?php echo __("Don't select more free gifts")?>",
+                            class: 'action primary action-primary action-accept',
+
+                            /**
+                             * Click handler.
+                             */
+                            click: function (event) {
+                                this.closeModal(event, true);
+                            }
+                        }],
+                        actions: {
+                            confirm: function () {
+                                $('#selected-gift').removeClass('required-entry');
+                                $("#product_addtocart_form").data('forge-submit', 1).submit();
+                                $("#product_addtocart_form").data('forge-submit', 0)
+                                $('#selected-gift').addClass('required-entry');
+                            },
+                            cancel: function () {}
+                        }
+                    });
+                } else {
+                    $("#product_addtocart_form").submit();
+                }
+
+            });
+
+            
+            $("#freegift-products .freegift-info").each(function(index, elm){
+                $(elm).click(function(e){
+                    var target = $(e.target);
+                    if(target.is('.freegift-view') || target.is('.fg-product')) return;
+                    
+                    $(this).toggleClass('selected');
+
+                    if(!updateSelectedGift())
+                        $(this).removeClass('selected');
+                });
+            });
+            
+            function updateSelectedGift(){
+                var selected = [];
+                $("#freegift-products .freegift-info.selected").each(function(index, elm){
+                    selected.push($(elm).data('product'));
+                });
+                if(FREEGIFT_NUM < $(selected).size()){
+                    alert({
+                        modalClass: 'error freegif-warning-modal',
+                        title: "<?php echo __("Error ...");?>",
+                        content: "<?php echo __('You cannot select more than %1 free gifts')?>".replace("%1", '<strong>'+FREEGIFT_NUM+'</strong>'),
+                    });
+                    return false;
+                }
+                
+                $('#selected-gift').val(selected.join(','));
+                return true;
+            }
+        });
+    </script>
+<?php endif;?>

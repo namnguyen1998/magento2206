@@ -1,0 +1,33 @@
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<div class="freegift-products freegift-select-mode" id="freegift-products">
+    <h3 class="freegift-block-title"><i class="fg-gift"></i> <span data-bind="text: $t('Free Gifts')"></span></h3>
+	<p data-bind="html: $t('Select %1 free gifts from the list below. (%2 is added.)').replace('%1',freeGiftLimit()).replace('%2',addedFreeGiftCount())"></p>
+	
+	<!-- ko foreach: {data: products, as: 'product'} -->
+		<div class="freegift-info">
+			<div class="freegift-thumbnail" data-bind="html: product.image_html" ></div>
+			<div class="product-item-name freegift-name" data-bind="html: product.name"></div>
+			<div class="freegift-regular-price">
+				<div class="price-box price-final_price" data-role="priceBox">
+					<span class="price-container price-final_price tax weee">
+						<span class="price-wrapper" data-bind="html: $parent.formatPrice(product.final_price)"></span>
+					</span>
+				</div>
+			</div>
+			<div class="freegift-selected"><i class="fg-selected"></i></div>
+			<div class="freegift-view"><a data-bind="attr:{href:product.product_url}" target="_blank"><i class="fg-product"></i></a></div>
+			<div class="product actions product-item-actions" hidden>
+				<div class="actions-primary">
+					  <button type="button" data-bind="css: product.isAddingToCart()?'disabled':'',click: $parent.addFreeGiftToCart.bind($parent, $data), attr: {title:$t('Get This Free Gift')}" class="action tocart primary">
+					   <span data-bind="text:$t('Get This Free Gift')"></span>
+				   </button>
+			   </div>
+			</div>
+		</div>
+	<!-- /ko -->
+</div>

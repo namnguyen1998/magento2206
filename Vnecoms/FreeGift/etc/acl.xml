@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Backend::marketing">
+                    <resource id="Vnecoms_FreeGift::promo" title="Free Gift" sortOrder="10">
+                        <resource id="Vnecoms_FreeGift::promo_catalog" title="Catalog Rule" sortOrder="10" />
+                        <resource id="Vnecoms_FreeGift::promo_sales" title="Sales Rule" sortOrder="20" />
+                        <resource id="Vnecoms_FreeGift::configuration" title="Configuration" sortOrder="100" />
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

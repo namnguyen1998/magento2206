@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<head>
+        <css src="Vnecoms_FreeGift::css/freegift.css"/>
+    </head>
+    <body>
+    	<referenceContainer name="content.top">
+			<container name="freegift.quote.container" htmlTag="div" htmlClass="freegift-quote-container">
+				<block class="Vnecoms\FreeGift\Block\Sales" name="freegift.quote.products" template="sales-freegifts.phtml" cacheable="false">
+					<arguments>
+	                    <argument name="jsLayout" xsi:type="array">
+	                    	<item name="components" xsi:type="array">
+	                            <item name="freegift" xsi:type="array">
+	                            	<item name="component" xsi:type="string">Vnecoms_FreeGift/js/freegift</item>
+	                            </item>
+	                        </item>
+	                	</argument>
+	               	</arguments>
+				</block>
+		    </container>
+	    </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,64 @@
+"Delete Rule","Delete Rule"
+"Are you sure you want to do this?","Are you sure you want to do this?"
+Reset,Reset
+"Save and Apply","Save and Apply"
+"Save and Continue Edit","Save and Continue Edit"
+Save,Save
+"Free Gift Catalog Rule","Free Gift Catalog Rule"
+"Add New Rule","Add New Rule"
+"This rule no longer exists.","This rule no longer exists."
+"Your rule has been deleted.","Your rule has been deleted."
+"The rule id is invalid.","The rule id is invalid."
+"Free Gift","Free Gift"
+"New Catalog Rule","New Catalog Rule"
+"Edit Block","Edit Block"
+"New Block","New Block"
+"Catalog Rules","Catalog Rules"
+"Manage Catalog Rules","Manage Catalog Rules"
+"You saved the rule.","You saved the rule."
+"Something went wrong while saving the rule data. Please review the error log.","Something went wrong while saving the rule data. Please review the error log."
+"We found updated rules that are not applied. Please click ""Apply Rules"" to update your catalog.","We found updated rules that are not applied. Please click ""Apply Rules"" to update your catalog."
+"The rule was not registered","The rule was not registered"
+"The website is not set","The website is not set"
+"The group is not set","The group is not set"
+"From date must to be less than to date","From date must to be less than to date"
+"Selected free gift(s) are not valid. Please try again.","Selected free gift(s) are not valid. Please try again."
+"Free Gift %1 is added to your shopping cart.","Free Gift %1 is added to your shopping cart."
+"Free Products","Free Products"
+"Related products are shown to customers in addition to the item the customer is looking at.","Related products are shown to customers in addition to the item the customer is looking at."
+"Add Free Products","Add Free Products"
+Action,Action
+"Number of Free Products","Number of Free Products"
+From,From
+Cancel,Cancel
+"Add Selected Products","Add Selected Products"
+Remove,Remove
+ID,ID
+Thumbnail,Thumbnail
+Name,Name
+Status,Status
+"Attribute Set","Attribute Set"
+SKU,SKU
+Price,Price
+Actions,Actions
+"All free gifts are bought together with the main product","All free gifts are bought together with the main product"
+"Customer select free gift(s) that he like","Customer select free gift(s) that he like"
+"e.g. Customer can select 2 from 5 free gifts.","e.g. Customer can select 2 from 5 free gifts."
+Item,Item
+"See price before order confirmation.","See price before order confirmation."
+Qty,Qty
+Subtotal,Subtotal
+"What's this?","What's this?"
+"You can select %1 free gifts. (%2 free gift(s) is selected)","You can select %1 free gifts. (%2 free gift(s) is selected)"
+"Select more free gifts","Select more free gifts"
+"You cannot select more than %1 free gifts","You cannot select more than %1 free gifts"
+"Free Gifts","Free Gifts"
+"Buy this product and get %1 free gifts from the list below.","Buy this product and get %1 free gifts from the list below."
+"Buy this product and get all free gifts below.","Buy this product and get all free gifts below."
+"Warning ...","Warning ..."
+"Don't select more free gifts","Don't select more free gifts"
+"Error ...","Error ..."
+"Remove item","Remove item"
+"See Details","See Details"
+"Options Details","Options Details"
+"FREE GIFT","FREE GIFT"

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add 
+            id="Vnecoms_FreeGift::promo" 
+            title="Free Gift" 
+            module="Vnecoms_FreeGift" 
+            parent="Magento_Backend::marketing" 
+            sortOrder="11" 
+            resource="Vnecoms_FreeGift::promo"
+            />
+        <add 
+            id="Vnecoms_FreeGift::promo_catalog" 
+            title="Catalog Rules" 
+            sortOrder="10" 
+            module="Vnecoms_FreeGift" 
+            parent="Vnecoms_FreeGift::promo" 
+            action="freegift/promo_catalog/" 
+            dependsOnModule="Vnecoms_FreeGift" 
+            resource="Vnecoms_FreeGift::promo_catalog"
+            />
+        <add 
+            id="Vnecoms_FreeGift::promo_sales" 
+            title="Sales Rules" 
+            translate="title" 
+            sortOrder="10" 
+            module="Vnecoms_FreeGift" 
+            parent="Vnecoms_FreeGift::promo" 
+            action="freegift/promo_sales/" 
+            dependsOnModule="Vnecoms_FreeGift" 
+            resource="Vnecoms_FreeGift::promo_sales"
+            />
+        <add 
+            id="Vnecoms_FreeGift::configuration" 
+            title="Configuration" 
+            translate="title" 
+            sortOrder="10" 
+            module="Vnecoms_FreeGift" 
+            parent="Vnecoms_FreeGift::promo" 
+            action="adminhtml/system_config/edit/section/freegift" 
+            dependsOnModule="Vnecoms_FreeGift" 
+            resource="Vnecoms_FreeGift::configuration"
+            />
+    </menu>
+</config>

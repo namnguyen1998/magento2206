@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+    	<referenceContainer name="left">
+            <block class="Vnecoms\FreeGift\Block\Adminhtml\Sales\Edit\Tabs" name="promo_sales_edit_tabs">
+                <block class="Vnecoms\FreeGift\Block\Adminhtml\Sales\Edit\Tab\Main" name="promo_sales_edit_tab_main"/>
+                <block class="Vnecoms\FreeGift\Block\Adminhtml\Sales\Edit\Tab\Conditions20x" name="promo_sales_edit_tab_conditions"/>
+                <block class="Vnecoms\FreeGift\Block\Adminhtml\Sales\Edit\Tab\Actions" name="promo_sales_edit_tab_actions">
+                	<container name="form_after">
+	                	<block class="Vnecoms\FreeGift\Block\Adminhtml\Sales\Edit\Tab\Product" name="freegift.rule.edit.tab.product"/>
+				        <block class="Magento\Backend\Block\Widget\Grid\Serializer" name="related_grid_serializer">
+				            <arguments>
+				                <argument name="grid_block" xsi:type="string">freegift.rule.edit.tab.product</argument>
+				                <argument name="callback" xsi:type="string">getSelectedRelatedProducts</argument>
+				                <argument name="input_element_name" xsi:type="string">rule[product_ids]</argument>
+				                <argument name="reload_param_name" xsi:type="string">free_products</argument>
+				            </arguments>
+				        </block>
+			        </container>
+                </block>
+
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">main_section</argument>
+                    <argument name="block" xsi:type="string">promo_sales_edit_tab_main</argument>
+                </action>
+                 
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">conditions_section</argument>
+                    <argument name="block" xsi:type="string">promo_sales_edit_tab_conditions</argument>
+                </action>
+
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">actions_section</argument>
+                    <argument name="block" xsi:type="string">promo_sales_edit_tab_actions</argument>
+                </action>
+
+            </block>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Vnecoms\FreeGift\Block\Adminhtml\Sales\Edit" name="promo_sales_edit"/>
+        </referenceContainer>
+        <!-- 
+        <referenceContainer name="js">
+            <block class="Vnecoms\FreeGift\Block\Adminhtml\Sales\Edit\Js" template="catalog/js.phtml"/>
+        </referenceContainer>
+         -->
+    	<!-- <referenceContainer name="content">
+    		<referenceBlock name="freegift_catalog_rule_form">
+                <block class="Vnecoms\FreeGift\Block\Adminhtml\Sales\Edit\Tab\Conditions" name="promo_catalog_edit_tab_conditions">
+                    <arguments>
+	                    <argument name="config" xsi:type="array">
+	                        <item name="label" xsi:type="string" translate="true">Conditions</item>
+	                        <item name="collapsible" xsi:type="boolean">true</item>
+	                        <item name="opened" xsi:type="boolean">false</item>
+	                        <item name="sortOrder" xsi:type="number">20</item>
+	                        <item name="canShow" xsi:type="boolean">true</item>
+	                        <item name="componentType" xsi:type="string">fieldset</item>
+	                    </argument>
+	                </arguments>
+                </block>
+            </referenceBlock>
+        	<uiComponent name="freegift_catalog_rule_form"/>
+       	</referenceContainer> -->
+    </body>
+</page>

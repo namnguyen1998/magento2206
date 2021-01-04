@@ -1,0 +1,61 @@
+@font-face {
+  font-family: 'vnecoms-freegift';
+  src:  url('../fonts/vnecoms-freegift.eot?i5jrfl');
+  src:  url('../fonts/vnecoms-freegift.eot?i5jrfl#iefix') format('embedded-opentype'),
+    url('../fonts/vnecoms-freegift.ttf?i5jrfl') format('truetype'),
+    url('../fonts/vnecoms-freegift.woff?i5jrfl') format('woff'),
+    url('../fonts/vnecoms-freegift.svg?i5jrfl#vnecoms-freegift') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="fg-"], [class*=" fg-"],.freegif-warning-modal .modal-content:before {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'vnecoms-freegift' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 18px;
+}
+
+.fg-selected:before {content: "\f058";}
+.fg-gift:before {content: "\f06b";color: #ff5501;font-size: 20px;}
+.fg-product:before {content: "\f08e";}
+.fg-exclamation-triangle:before {content: "\e900";}
+.freegif-warning-modal .modal-content:before{content: "\e900";display: block;float: left;margin-right: 20px;font-size: 40px;color: #F39C12;}
+
+/*Product View Page*/
+.freegift-products{display: block; width: 100%;margin: 20px 0;}
+.freegift-products:after{display: table; content:""; clear: both;}
+.freegift-block-title{color: #888; border-bottom: 1px solid #dfdfdf;padding-bottom: 5px;}
+.freegift-info{border: 1px solid transparent; display: table-cell;  width: calc(25% - 22px);min-height: 160px; float: left;margin: 10px 5px; padding: 20px 5px 10px; position: relative;text-align: center;}
+.freegift-regular-price{position: absolute; bottom: 5px; width: calc(100% - 10px);}
+.freegift-regular-price .price{font-weight: 700; text-decoration: line-through; color: #7d7d7d;}
+.freegift-selected{display: none; position: absolute; top: 5px; right: 5px; color: #397739;}
+.freegift-view{display: none; position: absolute; top: 5px; left: 5px;}
+.freegift-view a{color: #888; text-decoration: none;}
+.freegift-view a:hover{color: #222;}
+.freegift-info:hover{border-color: #d3d3d3;}
+.freegift-info:hover .freegift-view{display: block;}
+
+.freegift-select-mode .freegift-info{cursor: pointer;}
+.freegift-select-mode .freegift-info.selected{border-color: #006400;}
+.freegift-select-mode .freegift-info.selected .freegift-selected{display: block;}
+
+/*Shopping cart Free  Gift*/
+.fg-list-container .freegift-block-title{margin-bottom: 20px; margin-top: 0;}
+.fg-list-container .product-item .price-box .price{text-decoration: line-through;}
+.fg-list-container.page-products .products-grid .product-item{width: 16.439%; min-width: 170px;}
+.fg-list-container .products-grid{border: 1px solid #ccc; border-radius: 5px; margin-bottom:20px; padding: 20px;}
+.fg-list-container.page-products .products-grid .product-items{background: #FFF; margin: 0;}
+
+/*Shopping Cart*/
+.item-freegift{position: relative;}
+.item-freegift-label{position: absolute; top: -2px; left: -2px;z-index: 10;}

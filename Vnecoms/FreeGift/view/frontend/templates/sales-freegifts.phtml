@@ -1,0 +1,43 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Category view template
+ *
+ * @var $block \Vnecoms\FreeGift\Block\Sales
+ */
+?>
+<div id="freegift-list-container" class="freegift-products-container freegift-sale-rule" data-bind="scope: 'freegift'">
+<!-- ko if: canShowBlock() -->
+<!-- ko template: getTemplate() --><!-- /ko -->
+<!-- /ko -->
+</div>
+<script type="text/javascript">
+require([
+    "jquery"
+], function($){
+
+    $(document).ready(function() {
+        $(document).on('click', '.freegift-sale-rule #freegift-products .freegift-info', function(e){
+            var target = $(e.target);
+            if(target.is('.freegift-view') || target.is('.fg-product')) return;
+            $(this).addClass('selected');
+            $(this).find('button.tocart').trigger("click");				
+        });
+    });
+});
+</script>
+<script type="text/x-magento-init">
+    {
+        "#freegift-list-container": {
+            "Magento_Ui/js/core/app": <?php /* @escapeNotVerified */ echo $block->getJsLayout();?>
+        }
+    }
+</script>
