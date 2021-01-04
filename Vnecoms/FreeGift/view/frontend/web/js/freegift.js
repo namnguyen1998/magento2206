@@ -112,9 +112,7 @@ define([
 		            })
 	  	  	  	}else if(self.current_page == 'checkout_cart_index'){
 	  	  	  		window.location.reload();
-	  	  	  	}else if(self.current_page == 'onestepcheckout_index_index'){
-					window.location.reload();
-				}
+	  	  	  	}
 		  	  	
 	  		}).error(function (response, q, t) { 
 	  			console.log(response);

@@ -47,8 +47,7 @@ class UpdateFreeGift implements ObserverInterface
         if(sizeof($items)){
             foreach($items as $fKey=>$item){                
                 if(isset($item['free'])) foreach($item['free'] as $freegift){
-                    // $freegift->setQty($item['main']->getQty()); /*Free gift qty is alway equal to main product qty*/
-                    $freegift->setQty(1); /*Free gift qty is alway equal 1*/
+                    $freegift->setQty($item['main']->getQty()); /*Free gift qty is alway equal to main product qty*/
                 }
             }
         }

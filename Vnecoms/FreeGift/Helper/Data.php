@@ -13,6 +13,7 @@ use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductColl
 use Vnecoms\FreeGift\Model\ResourceModel\CatalogRule\CollectionFactory;
 use Vnecoms\FreeGift\Model\CatalogRule;
 use Magento\Framework\App\ObjectManager;
+use Magento\Checkout\Model\Session as CheckoutSession;
 
 /**
  * @SuppressWarnings(PHPMD.LongVariable)
@@ -57,15 +58,8 @@ class Data extends AbstractHelper
      */
     protected $_dateTime;
 
-    /**
-     * @var \Vnecoms\FreeGift\Model\SalesRuleFactory
-     */
-    protected $salesRuleFactory;
-
-    /**
-     * @var \Vnecoms\FreeGift\Model\CatalogRuleFactory
-     */
-    protected $catalogRuleFactory;
+    protected $ruleCustomerFactory;
+    protected $checkoutSession;
     
     public function __construct(
         Context $context,
@@ -73,20 +67,19 @@ class Data extends AbstractHelper
         ProductCollectionFactory $productCollectionFactory,
         RuleFactory $ruleFactory,
         \Magento\Catalog\Model\Product\Visibility $productVisibility,
-        \Vnecoms\FreeGift\Model\CatalogRuleFactory $catalogRuleFactory,
-        \Vnecoms\FreeGift\Model\SalesRuleFactory $salesRuleFactory,
         \Magento\Catalog\Model\Config $catalogConfig,
-        DateTime $dateTime
+        DateTime $dateTime,
+        \Vnecoms\FreeGift\Model\CustomerFactory $ruleCustomerFactory,
+        CheckoutSession $checkoutSession
     ) {
         $this->_collectionFactory           = $collectionFactory;
         $this->_productCollectionFactory    = $productCollectionFactory;
-        $this->_ruleFactory                 = $ruleFactory;
-        $this->_dateTime                    = $dateTime;
-        $this->productVisibility            = $productVisibility;
-        $this->catalogConfig                = $catalogConfig;
-        $this->catalogRuleFactory           = $catalogRuleFactory;
-        $this->salesRuleFactory             = $salesRuleFactory;
-        
+        $this->_ruleFactory         = $ruleFactory;
+        $this->_dateTime            = $dateTime;
+        $this->productVisibility    = $productVisibility;
+        $this->catalogConfig        = $catalogConfig;
+        $this->ruleCustomerFactory = $ruleCustomerFactory;
+        $this->checkoutSession = $checkoutSession;
         parent::__construct($context);
     }
     
@@ -244,6 +237,16 @@ class Data extends AbstractHelper
         
             if($tmpRule->getConditions()->validate($address)){
                 $appliedRuleId = $rule->getId();
+                if ($rule->getUsesPerCustomer()) {
+                    $customerId = $this->checkoutSession->getQuote()->getCustomerId();
+                    if ($customerId) {
+                        $ruleCustomer = $this->ruleCustomerFactory->create();
+                        $ruleCustomer->loadByCustomerRule($customerId, $appliedRuleId);
+                        if ($ruleCustomer->getId()) {
+                            if ($ruleCustomer->getTimesUsed() >= $rule->getUsesPerCustomer()) break;
+                        }
+                    }
+                }
                 $address->setAppliedFreeGiftRule($appliedRuleId);
                 $productIds = array_merge($productIds, explode(",", $rule->getProductIds()));
                 if($rule->getStopRulesProcessing()) break;
@@ -291,25 +294,6 @@ class Data extends AbstractHelper
             ->addIsActiveFilter()
             ->setOrder('sort_order','ASC');
         return $ruleCollection;
-    }
-
-// // // // // Custom // // // // //
-
-    /**
-     * Get number of free gifts that allows customer to select
-     * @return Ambigous <number, unknown>
-     */
-    public function getNumberOfCatalogFreeGift($appliedRuleId){
-        $rule = $this->catalogRuleFactory->create()->load($appliedRuleId);
-        $noOfFreegift = 0;
-        if ($rule->getSimpleAction() == \Vnecoms\FreeGift\Model\CatalogRule::ACTION_SELECT)
-            $noOfFreegift = $rule->getNoOfFreegift();
-        return $noOfFreegift;
-    }
-
-    public function getNumberOfSalesFreeGift($appliedRuleId){
-        $rule = $this->salesRuleFactory->create()->load($appliedRuleId);
-        return $rule->getNoOfFreegift();
     }
 
 }

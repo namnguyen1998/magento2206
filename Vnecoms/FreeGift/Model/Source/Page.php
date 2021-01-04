@@ -7,7 +7,6 @@ class Page implements \Magento\Framework\Option\ArrayInterface
     const PAGE_SHOPPING_CART    = 'checkout_cart_index';
     const PAGE_PRODUCT          = 'catalog_product_view';
     const PAGE_CATEGORY         = 'catalog_category_view';
-    const PAGE_ONESTEPCHECKOUT  = 'onestepcheckout_index_index';
     
     /**
      * Options array
@@ -36,10 +35,6 @@ class Page implements \Magento\Framework\Option\ArrayInterface
                 [
                     'label' => __('Category Page'),
                     'value' => self::PAGE_CATEGORY
-                ],
-                [
-                    'label' => __('One Step Checkout Page'),
-                    'value' => self::PAGE_ONESTEPCHECKOUT
                 ],
             ];
         }

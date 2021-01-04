@@ -90,10 +90,10 @@ class Cart implements ObserverInterface
 			$item->getOptionByCode('freegift_sales') ||
 			$item->getOptionByCode('freegift_catalog')
 		){
-			// $item->setCustomPrice(0);
-            // $item->setOriginalCustomPrice(0);
-            $item->setCustomPrice(0);
-			$item->setOriginalCustomPrice(0);
+	     $item->setCustomPrice(0);
+             $item->setOriginalCustomPrice(0);
+            //$item->setCustomPrice(1);
+	    //		$item->setOriginalCustomPrice(1);
 			return;
 		}
 		
@@ -111,7 +111,7 @@ class Cart implements ObserverInterface
         );
 
         if(!$freeProducts->count()) {
-            $item->addOption(['code'=> 'has_freegift', 'value' =>0 ,'product_id'=>$product->getId()]);
+            // $item->addOption(['code'=> 'has_freegift', 'value' =>0 ,'product_id'=>$product->getId()]);
             return;
         }
 
@@ -125,7 +125,7 @@ class Cart implements ObserverInterface
 
             $selectedFreeGift = trim($buyRequest->getData('selected_free_gifts'));
             if(!$selectedFreeGift){
-                $item->addOption(['code'=> 'has_freegift', 'value' =>0,'product_id'=>$product->getId()]);
+                // $item->addOption(['code'=> 'has_freegift', 'value' =>0,'product_id'=>$product->getId()]);
                 return;
             }
 

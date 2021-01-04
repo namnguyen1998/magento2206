@@ -185,6 +185,8 @@ class Main extends Generic implements TabInterface
             ]
         );
 
+        $fieldset->addField('uses_per_customer', 'text', ['name' => 'uses_per_customer', 'label' => __('Uses per Customer')]);
+
         $dateFormat = $this->_localeDate->getDateFormat(
             \IntlDateFormatter::SHORT
         );

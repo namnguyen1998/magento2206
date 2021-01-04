@@ -67,6 +67,7 @@ class Sales extends \Magento\Catalog\Block\Product\AbstractProduct
      * @var \Magento\CatalogInventory\Api\StockRegistryInterface
      */
     protected $_stockRegistry;
+    protected $_imageBuilder;
     
     /**
      * 
@@ -82,6 +83,7 @@ class Sales extends \Magento\Catalog\Block\Product\AbstractProduct
      */
     public function __construct(
         \Magento\Catalog\Block\Product\Context $context,
+	\Magento\Catalog\Block\Product\ImageBuilder $_imageBuilder,
         \Magento\Framework\Stdlib\DateTime\DateTime $date,
         \Magento\Framework\Locale\FormatInterface $localeFormat,
         PriceCurrencyInterface $priceCurrency,
@@ -94,6 +96,7 @@ class Sales extends \Magento\Catalog\Block\Product\AbstractProduct
         array $data = []
     ) {
         $this->_coreRegistry = $context->getRegistry();
+	$this->_imageBuilder = $_imageBuilder;
         $this->_date = $date;
         $this->_localeFormat = $localeFormat;
         $this->priceCurrency = $priceCurrency;
@@ -103,7 +106,6 @@ class Sales extends \Magento\Catalog\Block\Product\AbstractProduct
         $this->_customerSession = $customerSession;
         $this->salesRuleFactory = $salesRuleFactory;
         $this->_stockRegistry   = $stockRegistry; 
-        
         $this->jsLayout = isset($data['jsLayout']) && is_array($data['jsLayout']) ? $data['jsLayout'] : [];
         return parent::__construct($context, $data);
     }
@@ -111,6 +113,14 @@ class Sales extends \Magento\Catalog\Block\Product\AbstractProduct
     /**
      * @return string
      */
+     public function getImage($product, $imageId, $attributes = [])
+    {
+        return $this->_imageBuilder->setProduct($product)
+            ->setImageId($imageId)
+            ->setAttributes($attributes)
+            ->create();
+    }
+
     public function getJsLayout()
     {
         $products = [];
@@ -127,7 +137,9 @@ class Sales extends \Magento\Catalog\Block\Product\AbstractProduct
                 if ($productStock->getIsInStock()) {       
                     $productData = $product->getData();
                     $productData['name'] = $this->stripTags($product->getName(), null, true);
-                    $productData['image_html'] = $this->getImage($product, 'category_page_grid')->toHtml();
+                    //$productData['image_html'] = $this->getImage($product, 'category_page_grid')->toHtml();
+                    $image = $this->getImage($product, 'product_small_image');
+                    $productData['image_html'] = $image->getImageUrl();
                     $productData['product_url'] = $product->getProductUrl();
                     $products[] = $productData;
                 }

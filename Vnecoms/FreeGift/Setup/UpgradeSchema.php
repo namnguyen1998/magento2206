@@ -100,7 +100,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
             $installer->getConnection()->createTable($table);
         }
 
-	if (version_compare($context->getVersion(), '2.0.3', '<')) {
+	    if (version_compare($context->getVersion(), '2.0.3', '<')) {
             $installer->getConnection()->addColumn(
                 $setup->getTable('ves_freegift_salesrule'),
                 'no_of_freegift',
@@ -113,6 +113,68 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     'comment' => 'Number of product allow customer to select'
                 ]
             );
+        }
+
+        if (version_compare($context->getVersion(), '2.0.4', '<')) {
+            $installer->getConnection()->addColumn(
+                $setup->getTable('ves_freegift_salesrule'),
+                'uses_per_customer',
+                [
+                    'type' => \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                    'unsigned' => true,
+                    'nullable' => false,
+                    'default' => '0',
+                    'after' => 'to_date',
+                    'comment' => 'Uses Per Customer'
+                ]
+            );
+
+            if (!$installer->tableExists('ves_freegift_salesrule_customer')) {
+                $table = $installer->getConnection()->newTable(
+                    $installer->getTable('ves_freegift_salesrule_customer')
+                )->addColumn(
+                    'rule_customer_id', 
+                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, 
+                    null, 
+                    [
+                        'identity' => true, 
+                        'nullable' => false, 
+                        'primary' => true, 
+                        'unsigned' => true
+                    ],
+                    'Rule Customer Id'
+                )->addColumn(
+                    'rule_id', 
+                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, 
+                    null, 
+                    [
+                        'nullable' => false, 
+                        'unsigned' => true
+                    ], 
+                    'Rule Id'
+                )->addColumn(
+                    'customer_id', 
+                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER, 
+                    null, 
+                    [
+                        'nullable' => false, 
+                        'unsigned' => true
+                    ], 
+                    'Customer Id'
+                )->addColumn(
+                    'times_used',
+                    \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                    null,
+                    [
+                        'nullable' => false,
+                        'unsigned' => true, 
+                        'default' => '0'
+                    ],
+                    'Times Used'
+                )->setComment('Ves Freegift Salesrule Customer');
+
+                $installer->getConnection()->createTable($table);
+            }
         }
         
         $installer->endSetup();

@@ -78,10 +78,8 @@ class RemoveInvalidFreeGift implements ObserverInterface
 
         $freeGiftProductIds = $this->_helper->getShoppingCartFreeGiftProductIds(
             $address,
-            // $this->_storeManager->getStore()->getWebsiteId(),
-            // $this->_customerSession->getCustomerGroupId()
-            $quote->getStoreId(),
-            $quote->getCustomerGroupId()
+            $this->_storeManager->getStore()->getWebsiteId(),
+            $this->_customerSession->getCustomerGroupId()
         );
 
         foreach($quote->getAllItems() as $item){

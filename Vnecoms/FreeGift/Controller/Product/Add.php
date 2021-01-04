@@ -142,12 +142,13 @@ class Add extends \Magento\Catalog\Controller\Product\View
         
         try{
             /* Add the auction product to cart*/
-            $product->addCustomOption('freegift_sales', 1);           
-            //$type = 'freegift_sales';
+            $product->addCustomOption('freegift_sales', 1);
+            $product->addCustomOption('freegift_sales_rule', $appliedRule->getId());           
+            // $type = 'freegift_sales';
             $type = 'simple';
             switch($product->getTypeId()){
                 case 'configurable':
-                    //$type = 'freegift_sales_configurable';
+                    // $type = 'freegift_sales_configurable';
                     $type = 'configurable';
                     break;
             }

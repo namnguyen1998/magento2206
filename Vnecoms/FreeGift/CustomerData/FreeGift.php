@@ -131,7 +131,9 @@ class FreeGift extends \Magento\Framework\DataObject implements SectionSourceInt
             $productStock = $this->_stockRegistry->getStockItem($product->getId(), $product->getStore()->getWebsiteId());
             if ($productStock->getIsInStock()) { 
                 $productData = $product->getData();
-                $productData['image_html'] = $this->getImage($product, 'category_page_grid')->toHtml();
+                // $productData['image_html'] = $this->getImage($product, 'category_page_grid')->toHtml();
+                $image = $this->getImage($product, 'product_small_image');
+                $productData['image_html'] = $image->getImageUrl();
                 $productData['product_url'] = $product->getProductUrl();
                 $products[] = $productData;
             }

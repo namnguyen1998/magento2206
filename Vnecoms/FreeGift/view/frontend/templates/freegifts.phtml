@@ -48,6 +48,7 @@ $isSelectMode = $block->isSelectMode();
             
             var FREEGIFT_NUM = <?php echo $block->getNumberOfFreeGift()?>;
             var counter = <?php echo $counter; ?>;
+            var flag = 0;
 
             if(FREEGIFT_NUM > counter) { 
                 FREEGIFT_NUM = counter;
@@ -60,51 +61,67 @@ $isSelectMode = $block->isSelectMode();
             $("#product-addtocart-button").attr('type', 'button');
             
             $("#product_addtocart_form").on('click', '#product-addtocart-button', function() {
-                var selectedFreegift = $('#selected-gift').val() ? $($('#selected-gift').val().split(',')).size() : 0;
-                if(selectedFreegift < FREEGIFT_NUM){
-                    confirm({
-                        modalClass: 'confirm vnecoms-warning freegif-warning-modal',
-                        title: "<?php echo __("Warning ...");?>",
-                        content: "<?php echo __('Please select %1 free gift before add to cart. (%2 free gift(s) is selected)')?>".replace("%1",'<strong>'+FREEGIFT_NUM+'</strong>').replace("%2",'<strong>'+selectedFreegift+'</strong>'),
-                        buttons: [{
-                            text: "<?php echo __('Select more free gifts')?>",
-                            class: 'action-secondary action-dismiss',
+                if (flag == 0) {
+                    $('#product-addtocart-button').removeClass('tocart');
+                    var selectedFreegift = $('#selected-gift').val() ? $($('#selected-gift').val().split(',')).size() : 0;
+                    if(selectedFreegift < FREEGIFT_NUM){
+                        confirm({
+                            modalClass: 'confirm vnecoms-warning freegif-warning-modal',
+                            title: "<?php echo __("Warning ...");?>",
+                            content: "<?php echo __('Please select %1 free gift before add to cart. (%2 free gift(s) is selected)')?>".replace("%1",'<strong>'+FREEGIFT_NUM+'</strong>').replace("%2",'<strong>'+selectedFreegift+'</strong>'),
+                            buttons: [{
+                                text: "<?php echo __('Select more free gifts')?>",
+                                class: 'action-secondary action-dismiss',
 
-                            /**
-                             * Click handler.
-                             */
-                            click: function (event) {
-                                this.closeModal(event);
-                            }
-                        }, {
-                            text: "<?php echo __("Don't select more free gifts")?>",
-                            class: 'action primary action-primary action-accept',
+                                /**
+                                 * Click handler.
+                                 */
+                                click: function (event) {
+                                    this.closeModal(event);
+                                }
+                            }, {
+                                text: "<?php echo __("Don't select more free gifts")?>",
+                                class: 'action primary action-primary action-accept',
 
-                            /**
-                             * Click handler.
-                             */
-                            click: function (event) {
-                                this.closeModal(event, true);
+                                /**
+                                 * Click handler.
+                                 */
+                                click: function (event) {
+                                    this.closeModal(event, true);
+                                }
+                            }],
+                            actions: {
+                                confirm: function () {
+                                    $('#selected-gift').removeClass('required-entry');
+                                    // $("#product_addtocart_form").data('forge-submit', 1).submit();
+                                    // $("#product_addtocart_form").data('forge-submit', 0)
+                                    flag = 1;
+                                    $('#product-addtocart-button').addClass('tocart');
+                                    $('#product-addtocart-button').trigger('click');
+                                    $('#selected-gift').addClass('required-entry');
+                                    $('.modals-overlay').hide();
+                                },
+                                cancel: function () {}
                             }
-                        }],
-                        actions: {
-                            confirm: function () {
-                                $('#selected-gift').removeClass('required-entry');
-                                $("#product_addtocart_form").data('forge-submit', 1).submit();
-                                $("#product_addtocart_form").data('forge-submit', 0)
-                                $('#selected-gift').addClass('required-entry');
-                            },
-                            cancel: function () {}
-                        }
-                    });
-                } else {
-                    $("#product_addtocart_form").submit();
+                        });
+                    } else {
+                        // $("#product_addtocart_form").submit();
+                        $('#product-addtocart-button').addClass('tocart');
+                    }
+                }
+                if (flag == 1) {
+                    flag = 0;
                 }
 
             });
 
             
             $("#freegift-products .freegift-info").each(function(index, elm){
+                if (counter == 1) {
+                    $(elm).toggleClass('selected');
+                    updateSelectedGift();
+                }
+                
                 $(elm).click(function(e){
                     var target = $(e.target);
                     if(target.is('.freegift-view') || target.is('.fg-product')) return;
